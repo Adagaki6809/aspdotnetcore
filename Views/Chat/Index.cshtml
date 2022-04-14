@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Чат";
+}
+
+<div class="content">
+    <p>Привет, <a asp-controller="User" asp-action="Index">@User.Identity.Name</a></p>
+    <br />
+    <input id="userName" type="hidden" value="@User.Identity.Name" />
+    <div id="header"></div>
+    <br />
+</div>
+<div class="chat-area">
+    <div id="messagesArea" class="container overflow-auto messages-area"></div>
+    <div id="inputForm" class="container input-form">
+        <textarea class="message-to-send" type="text" id="messageToSend" placeholder="Отправить сообщение" rows="3" maxlength="500" style=""></textarea>
+        <input type="button" id="sendBtn" class="btn btn-sm btn-primary" value="Отправить" />
+    </div>
+</div>
+
+@section Scripts {
+    <script src="js/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        let userName = document.getElementById("userName").value;
+        // получение сообщения от сервера
+        hubConnection.on('Send', function (message, userName) {
+
+            // создаем элемент <b> для имени пользователя
+            let userNameElem = document.createElement("b");
+            userNameElem.appendChild(document.createTextNode(userName + ':'));
+
+            // создает элемент <p> для сообщения пользователя
+            let elem = document.createElement("p");
+            elem.appendChild(userNameElem);
+            elem.appendChild(document.createTextNode("\xA0"));
+            elem.appendChild(document.createTextNode(message));
+
+            let chat = document.getElementById("messagesArea");
+            chat.appendChild(elem);
+            chat.scrollTop = chat.scrollHeight;
+        });
+
+        // отправка сообщения на сервер
+        document.getElementById("sendBtn").addEventListener("click", function (e) {
+            let elem = document.getElementById("messageToSend");
+            let message = elem.value.trim();
+            if (message != "") {
+                hubConnection.invoke("Send", message, userName);
+                elem.value = "";
+            }
+
+        });
+
+        document.getElementById("messageToSend").addEventListener("keydown", function (e) {
+            const keyCode = e.which || e.keyCode;
+            if (keyCode === 13 && !e.shiftKey) {
+                e.preventDefault();
+                let message = e.target.value.trim();
+                if (message != "") {
+                    hubConnection.invoke("Send", message, userName);
+                    e.target.value = "";
+                }
+            }
+        });
+
+        hubConnection.start();
+    </script>
+    <script>
+        document.getElementsByClassName("main pb-3")[0].className = "pb-3 full-height";
+    </script>
+}

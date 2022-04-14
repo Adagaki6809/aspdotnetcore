@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Главная страница";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>Вы вошли как <a asp-controller="User" asp-action="Index"><b>@User.Identity.Name</b></a></p>
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <input type="submit" value="Выход" />
+    </form>
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Вход</a>
+    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Регистрация</a>
+}

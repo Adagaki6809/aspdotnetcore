@@ -1,0 +1,58 @@
+﻿@model RegisterViewModel
+
+<h2>Регистрация нового пользователя</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-controller="Account" asp-action="Register" asp-antiforgery="true" class="needs-validation" novalidate>
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label><br />
+                <input asp-for="Name" class="form-control" aria-describedby="nameHelpInline" placeholder="Введите логин" required />
+                <span asp-validation-for="Name" id="nameHelpInline" class="form-text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label><br />
+                <input asp-for="Email" class="form-control" aria-describedby="emailHelpInline" placeholder="Введите email" required />
+                <span asp-validation-for="Email" id="emailHelpInline" class="form-text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label><br />
+                <input asp-for="Year" class="form-control" aria-describedby="yearHelpInline" placeholder="Введите год" required />
+                <span asp-validation-for="Year" id="yearHelpInline" class="form-text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label><br />
+                <input asp-for="Password" class="form-control" aria-describedby="passwordHelpInline" placeholder="Введите пароль" required />
+                <span asp-validation-for="Password" id="passwordHelpInline" class="form-text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordConfirm" class="control-label"></label><br />
+                <input asp-for="PasswordConfirm" class="form-control" aria-describedby="passwordConfirmHelpInline" placeholder="Повторите пароль" required />
+                <span asp-validation-for="PasswordConfirm" id="passwordConfirmHelpInline" class="form-text text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Регистрация" class="btn btn-outline-secondary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section ValidationStyle {
+    <link rel="stylesheet" href="~/css/validation.css" />
+}
+@section Scripts {
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"
+            asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.validator">
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"
+            asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive">
+    </script>
+}
+
+@*@section YearValidationFix {
+        <script>
+            document.getElementById("Year").addEventListener("blur", (e) => { if (e.target.value == "") e.target.value = "0" });
+            document.getElementsByTagName("Form")[0]?.addEventListener("submit", (e) => { if (document.getElementById("Year").value == "") document.getElementById("Year").value = "0" });
+        </script>
+    }*@

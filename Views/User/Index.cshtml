@@ -1,0 +1,18 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Пользователь";
+}
+
+<p>Привет, @User.Identity.Name</p>
+@if (!string.IsNullOrEmpty(Model.PathToAvatar))
+{
+    <img class="avatar" src="@Model.PathToAvatar" />
+}
+
+<a asp-controller="User" asp-action="UploadAvatar" asp-route-id="@Model.Id" class="btn btn-primary">Загрузить аватар</a>
+<a asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редактировать</a>
+<a asp-controller="User" asp-action="SignOut" class="btn btn-primary">Выйти</a>
+
+
+

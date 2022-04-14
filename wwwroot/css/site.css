@@ -1,0 +1,161 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.footer {
+    width: 100%;
+    white-space: nowrap;
+    line-height: 67px; /* Vertically center the text there */
+    margin-top: auto;
+}
+/*mine*/
+.form-switch .form-check-input:checked {
+    background-position: right center;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+.form-check-input:checked[type="checkbox"] {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+.form-switch .form-check-input {
+    width: 2em;
+    margin-left: -2.5em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+    background-position: left center;
+    border-radius: 2em;
+    transition: background-position 0.15s ease-in-out;
+}
+.form-check-input:checked {
+    background-color: #375a7f;
+    border-color: #375a7f;
+}
+.form-check .form-check-input {
+    float: left;
+    margin-left: -1.5em;
+}
+.form-check-input {
+    width: 1em;
+    height: 1em;
+    margin-top: 0.25em;
+    vertical-align: top;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+
+.dark-theme1 {
+    background-color: #343a40 !important;
+}
+.full-height {
+    height: 85vh;
+}
+.main {
+    height: 100%;
+}
+.content {
+    height: 10%;
+}
+.chat-area {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.messages-area {
+    padding: 1rem 0;
+    word-break: break-word;
+}
+.message-to-send {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    margin-right:0.5rem;
+    overflow: hidden;
+    resize: none;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    width: 100%;
+}
+.message-to-send:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+    outline: 0;
+}
+.input-form {
+    display: flex;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0.5rem;
+}
+.avatar {
+    display: block;
+    padding: inherit;
+}

@@ -1,0 +1,50 @@
+using System;
+using System.Threading.Tasks;
+using Site.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+namespace Site
+{
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+
+            var host = CreateHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    await RoleInitializer.InitializeAsync(userManager, rolesManager);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Ошибка при инициализации базы данных.");
+                }
+            }
+
+            host.Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    //webBuilder.ConfigureKestrel((context, options) =>
+                    //{
+                    //    // Handle requests up to 50 MB
+                    //    options.Limits.MaxRequestBodySize = 2684354560;
+                    //});
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+}

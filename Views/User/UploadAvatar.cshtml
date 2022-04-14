@@ -1,0 +1,19 @@
+﻿@model AvatarViewModel
+@{
+    ViewData["Title"] = "Добавление файла";
+}
+
+@if (!string.IsNullOrEmpty(Model.PathToAvatar))
+{
+    <h6>Старый аватар</h6>
+    <img class="avatar" src="@Model.PathToAvatar" />
+}
+
+<h3>Выберите файл для загрузки</h3>
+<form asp-action="UploadAvatar" asp-controller="User" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <input type="file" name="uploadedFile" /><br>
+    <input type="submit" value="Загрузить" />
+</form>
