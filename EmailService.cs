@@ -11,7 +11,7 @@ namespace Site
         public async Task SendEmailAsync(string email, string subject, string message)
         {
             var emailMessage = new MimeMessage();
-            var dbConfigDictionary = DBConfigHelper.GetDBConfig();
+            var dbConfigDictionary = DBConfigHelper.dbConfigDictionary;
 
             emailMessage.From.Add(new MailboxAddress("Администрация сайта", dbConfigDictionary["adminEmail"]));
             emailMessage.To.Add(new MailboxAddress("", email));

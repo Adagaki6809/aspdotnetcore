@@ -15,7 +15,8 @@ namespace Site
         }
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            var dbConfigDictionary = DBConfigHelper.GetDBConfig();
+            DBConfigHelper.InitializeDBConfig();
+            var dbConfigDictionary = DBConfigHelper.dbConfigDictionary;
             string adminName = dbConfigDictionary["adminName"];
             string adminEmail = dbConfigDictionary["adminEmail"];
             string adminPassword = dbConfigDictionary["adminPassword"];
