@@ -16,31 +16,47 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
+using Npgsql;
 
 namespace Site
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            CurrentEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        private IWebHostEnvironment CurrentEnvironment { get; set; } 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<FormOptions>(options =>
+            // services.AddTransient<IUserValidator<User>, CustomUserValidator>();
+
+            // if (CurrentEnvironment.IsDevelopment())
+            //    services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // if (CurrentEnvironment.IsProduction())
             {
-                // Set the limit to 256 MB
-                options.MultipartBodyLengthLimit = 268435456;
-            });
+                var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                var databaseUri = new Uri(databaseUrl);
+                var userInfo = databaseUri.UserInfo.Split(':');
 
-            services.AddTransient<IUserValidator<User>, CustomUserValidator>();
-            //var connection1 = "Server=(localdb)\\MSSQLLocalDB;Database=pathestofilesdb;Trusted_Connection=True;";
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+                var builder = new NpgsqlConnectionStringBuilder
+                {
+                    Host = databaseUri.Host,
+                    Port = databaseUri.Port,
+                    Username = userInfo[0],
+                    Password = userInfo[1],
+                    Database = databaseUri.LocalPath.TrimStart('/'),
+                    SslMode = SslMode.Require,
+                    TrustServerCertificate = true
+                };
+                services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(builder.ToString()));
+            }
+                
             services.AddIdentity<User, IdentityRole>(opts =>
             {
                 opts.Password.RequiredLength = 5;   // минимальная длина
@@ -79,7 +95,7 @@ namespace Site
             }
             else
             {
-                app.UseExceptionHandler("~/Home/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
